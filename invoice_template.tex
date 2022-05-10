@@ -1,71 +1,107 @@
 % LaTeX Simple Invoice Template
 % By Amy Fare | amyfare.ca
 % Source: amyfare.ca/files/simple_invoice_template.tex
+% with improvements by gobborg<3
+% gobborg's github repo: 
 % License: Creative Commons Attribution (CC BY 4.0)
-% Feel free to distribute, modify, and use as you wish, but please keep this line and the 4 lines above unchanged.
+% Feel free to distribute, modify, and use as you wish, but please keep this line and the 4 lines above unchanged. (-Amy Fare ... yea sorry Amy i added my info up here.)
 
-\documentclass{letter}
+\documentclass[a4paper]{letter}
 \usepackage[utf8]{inputenc}
-\usepackage[colorlinks]{hyperref}
-\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry} % Document margins
+\usepackage[colorlinks]{hyperref} % if i want color hyperlinks
+\hypersetup{urlcolor=blue}
+\usepackage[left=25mm,top=25mm,right=25mm,bottom=25mm]{geometry} % Document margins
 \usepackage{graphicx}
-\usepackage{tabularx}
+\usepackage{tabularx} % defaults for linewidth stuff
 \usepackage{multirow}
-\usepackage{ragged2e}
-\usepackage{hhline}
-\usepackage{array}
+\usepackage{hhline} % for hlines that are not the entire width of pg
+\usepackage{array} % reqd by tabularx
 
-\hypersetup{
-    urlcolor=blue
-}
-
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+% formatting for \today
+% needs to be british for dd month yyyy format
+\usepackage[british]{babel}
+\usepackage[useregional]{datetime2}
+\DTMlangsetup[en-GB]{ord=omit}
 
 \begin{document}
-	
-\thispagestyle{empty}
 
-% Header, for company, invoice info
-\begin{tabularx}{\textwidth}{l X l}
-   \hspace{-8pt} \multirow{5}{*}{\includegraphics[height=1.98cm]{logo.png}} & \textbf{Inter Astra Tutoring} & \hskip12pt\multirow{5}{*}{\begin{tabular}{r}\footnotesize\bf INVOICE \\[-0.8ex] \footnotesize TEST01 \\[-0.4ex] \footnotesize\bf DATE \\[-0.8ex] \footnotesize \MakeUppercase{\today} \\[-0.4ex] \footnotesize\bf DUE \\[-0.8ex] \footnotesize UPON RECEIPT OF SERVICES \end{tabular}}\hspace{-6pt} \\
-   & Amy Fare & \\
-   & amyfare.ca & \\
-   & +x-xxx-xxx-xxxx & \\
-   & me@example.com & \\
-\end{tabularx} 
+\thispagestyle{empty} % no page num
+
+% Header
+\begin{tabularx}{\textwidth}{c X c}
+   \hspace{-8pt} \multirow{4}{*}{\includegraphics[height=2.2cm]{gobborg.png}} 
+   
+   & \textbf{archox gets it done} \vspace{1mm} &
+   
+   \multirow{5}{*}
+   {\begin{tabular}{r} 
+   \footnotesize \bf INVOICE \\
+   [-0.4ex] \footnotesize 001 \\
+   [-0.4ex] \footnotesize \bf DATE \\
+   [-0.4ex] \footnotesize \MakeUppercase{\today} \\
+   [-0.4ex] \footnotesize \bf DUE \\
+   [-0.4ex] \footnotesize \MakeUppercase 24 MAY 2022 \end{tabular}}\hspace{-6pt} \\
+   \vspace{2mm}
+   & gobborg & \\
+   \vspace{2mm}
+   & archox.net & \\
+   \vspace{2mm}
+   & kotatsugoblin@gmail.com &
+\end{tabularx}
 
 \vspace{1 cm}
-
 BILL TO
+\vspace{0.1cm}
 
-% Recipient name
-\Large\textbf{Jane Doe}\normalsize
+% Recipient name and id
+\Large \textbf{Client Name}\normalsize 
+\hspace{0.3cm}
+\textit{Client no. 01}
+\hspace{0.3cm}
+For services in April 2022
+\vspace{0.2cm}
 
-% Table of fees
-\begin{tabularx}{\linewidth}{c X X X c}
+% items
+\begin{tabularx}{\textwidth}
+{ 
+   >{\raggedright\arraybackslash} X
+   >{\raggedright\arraybackslash} X
+   >{\raggedleft\arraybackslash} X 
+   }
     \hline
-    & & & &\\[0.25ex]
-    \centering{\bf{Service}} & \centering{\bf{Rate}} & \centering{\bf{Quantity}} & \centering{\bf{Discount}} & \bf Payment due\\[2.5ex]\hline
-    & & & &\\
-    \centering Tutoring (1 hr) & \centering\$20.00 & \centering 1 & \centering -\$5.00 & \$15.00\\[2.5ex]\hline
-    & & & &\\
-    & & & \bf Total & \$15.00\\[2.5ex]\hhline{~~~--}
-    & & & & \\
-    & & & \bf Payment received & \$0.00\\[2.5ex]\hhline{~~~--}
-    & & & & \\
-    & & & \bf Balance due & \$15.00\\[2.5ex]\hhline{~~~==}
+    \\
+    [0.25ex]
+    \bf Service & \bf Notes & \bf Rate \\
+    [2.5ex]
+    \hline \\
+    Task 1 &  & \textsterling 100 \\
+    Task 2 & \textit{3 choices presented} & \textsterling 150 \\
+    [2.5ex]\hline
+    \\
+\end{tabularx}
+
+% total
+\hfill \begin{tabularx}{0.2\textwidth}
+{
+    >{\raggedright\arraybackslash} X
+    >{\raggedleft\arraybackslash} X
+    }
+    \bf Total & \bf \textsterling 250 \\
+    [2.5ex]
+    \hhline{--}
 \end{tabularx}
 
 \vspace{1 cm}
 
+% payment instructions
 \Large\textbf{Payment instructions}\normalsize
 
 \vspace{0.1 cm}
 
-\textbf{E-transfer}\\
-me@example.com
+\textbf{Currencies accepted:}\\
+GBP (Pound sterling)
 
-\textbf{Paypal}\\
-\href{https://paypal.me/amycfare}{paypal.me/amycfare}
+\textbf{Wise}\\
+kotatsugoblin@gmail.com
 
 \end{document}
